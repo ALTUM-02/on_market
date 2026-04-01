@@ -3,5 +3,33 @@
 {% load static %}
 
 {% block content %}
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="p-4 bg-white shadow flex justify-between">
+  <h1 class="text-xl font-bold text-blue-500">ON_MARKET</h1>
+  <input id="search" class="border p-2 w-1/2" placeholder="Search...">
+</div>
+
+<div id="products" class="grid grid-cols-1 md:grid-cols-4 gap-4 p-4"></div>
+
+<script>
+fetch("/api/products/")
+.then(res => res.json())
+.then(data => {
+  let html = "";
+  data.forEach(p => {
+    html += `
+    <div class="bg-white p-4 shadow rounded">
+      <h2 class="font-bold">${p.name}</h2>
+      <p>$${p.price}</p>
+      <button onclick="addToCart(${p.id})"
+      class="bg-blue-500 text-white px-3 py-1 mt-2">
+        Add to Cart
+      </button>
+    </div>`;
+  });
+  document.getElementById("products").innerHTML = html;
+});
+</script>
 
 {% endblock %}

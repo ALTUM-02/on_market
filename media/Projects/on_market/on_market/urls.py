@@ -16,12 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include 
-from rest_framework.routers import DefaultRouter
+#from .views import home
 
+from rest_framework.routers import DefaultRouter
 from products.views import ProductViewSet
 from cart.views import CartViewSet
 from orders.views import OrderViewSet
-
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = DefaultRouter()
@@ -31,8 +31,8 @@ router.register(r'orders', OrderViewSet, basename='orders')
 
 urlpatterns = [
     #path('', home),
-    path('admin/', admin.site.urls),
     
+    path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     
     path('api/login/', TokenObtainPairView.as_view()),
