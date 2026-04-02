@@ -7,7 +7,7 @@ from .serializers import ProductSerializer
 from django.http import JsonResponse
 
 def home(request):
-    return JsonResponse({"message": "Welcome to On Market API"})
+    return render(request, 'home.html')
 
 # Create your views here.
 

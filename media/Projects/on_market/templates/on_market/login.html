@@ -1,0 +1,29 @@
+{% extends "reusable/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<input id="username" placeholder="username">
+<input id="password" type="password">
+
+<button onclick="login()">Login</button>
+
+<script>
+function login() {
+  fetch("/api/login/", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      username: document.getElementById("username").value,
+      password: document.getElementById("password").value
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    localStorage.setItem("token", data.access);
+  });
+}
+</script>
+
+{%  endblock %}
