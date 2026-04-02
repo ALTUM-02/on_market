@@ -33,6 +33,8 @@ urlpatterns = [
     #path('', home),
     
     path('admin/', admin.site.urls),
+    
+    path('', include('products.urls')),
     path('api/', include(router.urls)),
     
     path('api/login/', TokenObtainPairView.as_view()),
