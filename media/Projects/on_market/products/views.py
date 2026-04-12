@@ -6,8 +6,13 @@ from .serializers import ProductSerializer
 # views.py
 from django.http import JsonResponse
 
-def home(request):
-    return render(request, 'home.html')
+def home(request): 
+    products =[
+        {"name": "Phone", "price": 100},
+        {"name": "Laptop", "price": 500},
+    ]
+    
+    return render(request, 'pages/home.html', {"products": products})
 
 # Create your views here.
 
