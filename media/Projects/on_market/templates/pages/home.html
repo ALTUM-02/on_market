@@ -3,3 +3,20 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<h1 class="text-2xl mb-4">Products</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    {% for product in products %}
+    <div class="bg-white dark:bg-gray-800 p-4 rounded shadow hover:scale-105 transition">
+
+        <img src="{{ product.image }}" class="w-full h-40 object-cover rounded">
+
+        <h2 class="font-bold mt-2">{{ product.name }}</h2>
+        <p>${{ product.price }}</p>
+
+        <a href="{% url 'product_detail' product.id %}" 
+           class="text-blue-500">View</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
