@@ -11,7 +11,14 @@
             darkMode: 'class'
         }
     </script>  
-      
+    <script>
+      const btn = document.getElementById("menu-btn");
+  const menu = document.getElementById("mobile-menu");
+
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("hidden");
+  });
+</script>  
 </head>
 <body class="bg-white dark:bg-gray-900 text-black dark:text-white transition duration-500">
 
