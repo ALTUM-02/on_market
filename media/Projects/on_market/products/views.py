@@ -7,8 +7,14 @@ from .serializers import ProductSerializer
 from django.http import JsonResponse
 
 def home(request): 
-    products = Product.objects.all()
-    return render(request, 'pages/home.html', {"products": products})
+    query = request.GET.get('q')
+    
+    if query:
+        products = Product.objects.filter(name_incontains=query)
+    else:
+        products = Product.objects.all()     
+    
+    return render(request, 'pages/home.html', {"products": products, 'query': query})
 
 # Create your views here.
 
