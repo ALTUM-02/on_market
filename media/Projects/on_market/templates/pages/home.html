@@ -21,6 +21,8 @@
   </div>
 </form>
 
+{% if products %}
+
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
     {% for product in products %}
     <div class="bg-white dark:bg-gray-800 p-4 rounded shadow hover:scale-105 transition">
