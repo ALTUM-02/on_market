@@ -1,14 +1,42 @@
 {% load static %}
 
-<nav class="p-4 flex items-center justify-between bg-gray-200 dark:bg-gray-800">
-    <img src="{% static 'images/logo.png' %}"
-        alt="logo"
-        class="h-10 w-auto object-contain hover:scale-110 transition duration-300">
-    <h1 class="font-bold">MyShop</h1>
-    <div>
-        <a href="/" class="px-3">Home</a>
-        <a href="#" class="px-3">Products</a>
+<nav class="bg-gray-900 text-white">
+  <div class="max-w-7xl mx-auto px-4">
+    
+    <div class="flex justify-between items-center h-16">
+
+      <!-- Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="{% static 'images/logo.png' %}" 
+             class="w-10 h-10 rounded-full object-cover border-2 border-white">
+        <span class="font-bold text-lg">OnMarket</span>
+      </div>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex space-x-6">
+        <a href="#" class="hover:text-gray-300">Home</a>
+        <a href="#" class="hover:text-gray-300">Products</a>
+        <a href="#" class="hover:text-gray-300">Cart</a>
+      </div>
+
+      <!-- Mobile Button -->
+      <div class="md:hidden">
+        <button id="menu-btn" class="focus:outline-none">
+          ☰
+        </button>
+      </div>
+
     </div>
+
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 space-y-2 bg-gray-800">
+    <a href="#" class="block hover:text-gray-300">Home</a>
+    <a href="#" class="block hover:text-gray-300">Products</a>
+    <a href="#" class="block hover:text-gray-300">Cart</a>
+  </div>
+
 
     <button onclick="toggleDark()">🌙</button>
 </nav>
