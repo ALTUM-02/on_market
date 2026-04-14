@@ -18,3 +18,22 @@ def register(request):
         password=request.data['password']
     )
     return Response({"message": "User created"})
+
+def login_view(request):
+    if request.method == 'POST':
+        Username = request.POST['username']
+        password = request.POST['password']
+        
+        user = authenticate(request, username=username, password=password)
+        
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+        else:
+            return render(request, 'login.html', {'error': 'Invalid creditials'})
+    
+    return render(request, 'login.html')   
+ 
+def logout_view(request):
+    logout(request)
+    return redirect('/')
