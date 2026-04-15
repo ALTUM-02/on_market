@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include 
 from products.views import home
-from django.contrib
+from django.contrib.auth import views as auth_views
 #from .views import home
 
 from rest_framework.routers import DefaultRouter
@@ -41,7 +41,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     
     path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
-    path('logout/', auth_views.views.LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
     
     path('api/login/', TokenObtainPairView.as_view()),
     path('api/refresh/', TokenRefreshView.as_view()),
