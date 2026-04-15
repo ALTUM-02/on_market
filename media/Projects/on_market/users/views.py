@@ -14,7 +14,7 @@ def home(request):
 @api_view(['POST'])
 def register(request):
     user = User.objects.create_user(
-        username=request.data['username']
+        username=request.data['username'],
         password=request.data['password']
     )
     return Response({"message": "User created"})
