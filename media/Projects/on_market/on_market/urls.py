@@ -40,8 +40,7 @@ urlpatterns = [
     path('', include('users.urls')),
     path('api/', include(router.urls)),
     
-    path('login/', auth_views.LoginView.as_view(template_name='auth/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='login'), name='logout'),
+    
     
     path('api/login/', TokenObtainPairView.as_view()),
     path('api/refresh/', TokenRefreshView.as_view()),
