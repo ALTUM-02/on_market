@@ -16,6 +16,7 @@ def add_product(request):
         name = request.POST.get('name')
         price = request.POST.get('price')
         image = request.POST.get('image')
+        stock = request.POST.get('stock')
         
         Product.objects.create(
             name=name,
