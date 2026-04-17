@@ -15,6 +15,9 @@ def add_product(required):
     if request.method == 'POST':
         name = request.POST.get('name')
         price = request.POST.get('price')
+        image = request.POST.get('image')
+        
+        Product
         
 
 def home(request): 
