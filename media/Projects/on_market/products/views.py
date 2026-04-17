@@ -36,7 +36,9 @@ def edit_product(request, id):
     
     product = Product.objects.get(id=id)
     
-    if request.method == 'POST'
+    if request.method == 'POST':
+        product.name = request.POST.get('image')
+           
     
     
 
