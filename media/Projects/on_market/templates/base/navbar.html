@@ -27,7 +27,7 @@
         </button>
       </div>
 
-      {% if user.is_authenticated %}
+      {% if user.is_authenticated  and user.is_staff %}
 
   <!-- Profile + Logout -->
   <div class="flex items-center space-x-4">
@@ -37,6 +37,8 @@
        class="bg-red-500 px-3 py-1 rounded hover:bg-red-600">
       Logout
     </a>
+
+    <
   </div>
 
 {% else %}
