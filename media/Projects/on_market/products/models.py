@@ -6,7 +6,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200)
     price = models.FloatField()
     description = models.TextField()
-    Stock = models.IntegerField(null=True, blank=True)
+    Stock = models.IntegerField(default=0)
     image = models.ImageField(upload_to='products/')
     
     def _str_(self):
