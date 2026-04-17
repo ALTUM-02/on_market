@@ -51,7 +51,8 @@ def edit_product(request, id):
     return render(request, 'pages/edit_product.html', {'product': product})      
     
 @login_required
-deff
+def delete_product(request, id):
+    
 def home(request): 
     query = request.GET.get('q')
     
