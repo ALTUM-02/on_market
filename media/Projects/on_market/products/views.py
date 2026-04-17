@@ -53,6 +53,14 @@ def edit_product(request, id):
 @login_required
 def delete_product(request, id):
     
+    if not request.user.is_staff:
+        return redirect('home')
+    
+    product = Product.objects.get(id=id)
+    product.delete()
+    
+    return redirect('home')
+    
 def home(request): 
     query = request.GET.get('q')
     
