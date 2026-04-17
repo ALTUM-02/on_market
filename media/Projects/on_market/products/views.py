@@ -17,8 +17,12 @@ def add_product(required):
         price = request.POST.get('price')
         image = request.POST.get('image')
         
-        Product
-        
+        Product.objects.create(
+            name=name,
+            price=price,
+            image=image
+        )
+        return redirect('home')
 
 def home(request): 
     query = request.GET.get('q')
