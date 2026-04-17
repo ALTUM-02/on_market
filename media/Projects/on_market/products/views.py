@@ -23,6 +23,8 @@ def add_product(required):
             image=image
         )
         return redirect('home')
+    
+    return render(request, 'pages/add_product.html')
 
 def home(request): 
     query = request.GET.get('q')
