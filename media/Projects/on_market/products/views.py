@@ -40,7 +40,10 @@ def edit_product(request, id):
         product.name = request.POST.get('image')
         product.price = request.POST.get('price')
         product.image = request.POST.get('image')
-        product.stock = request.POST.get('stock')    
+        product.stock = request.POST.get('stock')  
+        
+        if request.FILES.get('image'):
+            product.image = request.  
     
 
 def home(request): 
