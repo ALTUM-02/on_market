@@ -3,8 +3,12 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser
 from .models import Product
 from .serializers import ProductSerializer
+from django.contrib.auth.decorators import login_required
 # views.py
 from django.http import JsonResponse
+
+@login_required
+def add 
 
 def home(request): 
     query = request.GET.get('q')
