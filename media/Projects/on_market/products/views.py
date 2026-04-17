@@ -28,7 +28,13 @@ def add_product(request):
     
     return render(request, 'pages/add_product.html')
 
-@
+@login_required
+def edit_product(request, id):
+    
+    if not request.user.is_staff:
+        return redirect('home')
+    
+    
 
 def home(request): 
     query = request.GET.get('q')
