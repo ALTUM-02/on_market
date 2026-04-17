@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from rest_framework import viewsets
 from rest_framework.permissions import IsAdminUser
 from .models import Product
