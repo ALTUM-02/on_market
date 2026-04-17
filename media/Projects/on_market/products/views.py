@@ -43,9 +43,15 @@ def edit_product(request, id):
         product.stock = request.POST.get('stock')  
         
         if request.FILES.get('image'):
-            product.image = request.  
+            product.image = request.FILES.get('image')
+            
+        product.save()
+        return redirect('home')
     
-
+    return render(request, 'pages/edit_product.html', {'product': product})      
+    
+@login_required
+deff
 def home(request): 
     query = request.GET.get('q')
     
