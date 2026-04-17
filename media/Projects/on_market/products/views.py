@@ -14,7 +14,8 @@ def add_product(required):
     
     if request.method == 'POST':
         name = request.POST.get('name')
-        price
+        price = request.POST.get('price')
+        
 
 def home(request): 
     query = request.GET.get('q')
