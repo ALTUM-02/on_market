@@ -22,7 +22,7 @@ def add_product(request):
             name=name,
             price=price,
             image=image,
-            stock=stock
+            Stock=stock
         )
         return redirect('home')
     
