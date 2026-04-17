@@ -8,7 +8,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 @login_required
-def add 
+def add_product(required):
+    if not request.user.is_staff:
+        return redirect('home')
+    
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        price
 
 def home(request): 
     query = request.GET.get('q')
