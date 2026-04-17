@@ -35,6 +35,24 @@
         <a href="{% url 'product_detail' product.id %}" 
            class="text-blue-500">View</a>
     </div>
+
+    {% if user.is_authenticated and user.is_staff %}
+    <div class="flex justify-between mt-3">
+
+        <!-- Edit -->
+        <a href="{% url 'edit_product' product.id %}" 
+       class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">
+       Edit
+    </a>
+
+    <!-- Delete -->
+    <a href="{% url 'delete_product' product.id %}" 
+       class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+       Delete
+    </a>
+
+</div>
+{% endif %}
     {% endfor %}
 </div>
 
