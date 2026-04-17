@@ -38,8 +38,9 @@ def edit_product(request, id):
     
     if request.method == 'POST':
         product.name = request.POST.get('image')
-           
-    
+        product.price = request.POST.get('price')
+        product.image = request.POST.get('image')
+        product.stock = request.POST.get('stock')    
     
 
 def home(request): 
