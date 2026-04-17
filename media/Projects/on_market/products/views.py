@@ -34,6 +34,10 @@ def edit_product(request, id):
     if not request.user.is_staff:
         return redirect('home')
     
+    product = Product.objects.get(id=id)
+    
+    if request.method == 'POST'
+    
     
 
 def home(request): 
