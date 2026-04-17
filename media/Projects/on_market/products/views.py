@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 
 @login_required
-def add_product(required):
+def add_product(request):
     if not request.user.is_staff:
         return redirect('home')
     
@@ -20,7 +20,8 @@ def add_product(required):
         Product.objects.create(
             name=name,
             price=price,
-            image=image
+            image=image,
+            stock=stock
         )
         return redirect('home')
     
@@ -29,12 +30,12 @@ def add_product(required):
 def home(request): 
     query = request.GET.get('q')
     
-    if query:
-        products = Product.objects.filter(name_incontains=query)
-    else:
-        products = Product.objects.all()     
+    #if query:
+       # products = Product.objects.filter(name_incontains=query)
+    #else:
+    products = Product.objects.all()     
     
-    return render(request, 'pages/home.html', {"products": products, 'query': query})
+    return render(request, 'pages/home.html', {"products": products})
 
 # Create your views here.
 
