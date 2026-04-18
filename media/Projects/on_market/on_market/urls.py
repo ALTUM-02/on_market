@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include 
 from products.views import home
 from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
 #from .views import home
 
 from rest_framework.routers import DefaultRouter
