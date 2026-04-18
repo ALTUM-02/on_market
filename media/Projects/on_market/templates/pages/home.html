@@ -27,7 +27,7 @@
     {% for product in products %}
     <div class="bg-white dark:bg-gray-800 p-4 rounded shadow hover:scale-105 transition">
 
-        <img src="{{ product.image }}" class="w-full h-40 object-cover rounded">
+        <img src="{{ product.image .url }}" class="w-full h-40 object-cover rounded">
 
         <h2 class="font-bold mt-2">{{ product.name }}</h2>
         <p>${{ product.price }}</p>
