@@ -30,11 +30,11 @@ def add_product(request):
 
 @login_required
 def edit_product(request, id):
+    product = Product.objects.get(id=id)
     
     if not request.user.is_staff:
         return redirect('home')
     
-    product = Product.objects.get(id=id)
     
     if request.method == 'POST':
         product.name = request.POST.get('image')
