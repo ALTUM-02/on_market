@@ -33,6 +33,7 @@
     {% endif %}
 
     <!-- Content -->
+    {% for product in products %} 
     <div class="p-4">
         <h2 class="text-lg font-bold">{{ product.name }}</h2>
         <p class="text-gray-600 mb-3">${{ product.price }}</p>
@@ -60,6 +61,7 @@
             {% endif %}
         </div>
     </div>
+    {% endfor %}
 
 </div>
           
