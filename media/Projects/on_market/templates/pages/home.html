@@ -35,11 +35,11 @@
     <!-- Content -->
     {% for product in products %} 
     {% for product in products %}
-<div class="bg-white rounded-lg shadow hover:shadow-lg transition duration-300 overflow-hidden">
+    <div class="bg-white rounded-lg shadow hover:shadow-lg transition duration-300 overflow-hidden">
 
-    <!-- Image -->
-    <div class="relative">
-        {% if product.image %}
+        <!-- Image -->
+        <div class="relative">
+            {% if product.image %}
             <img src="{{ product.image.url }}" class="w-full h-48 object-cover">
         {% else %}
             <div class="w-full h-48 flex items-center justify-center bg-gray-200">
