@@ -48,7 +48,7 @@
         {% endif %}    
 
             <!-- Delete -->
-            {% %} 
+            {% if product.id %} 
             <form action="{% url 'delete_product' product.id %}" method="POST">
                 {% csrf_token %}
                 <button type="submit" 
@@ -57,7 +57,7 @@
                     🗑 Delete
                 </button>
             </form>
-
+            {% endif %}
         </div>
     </div>
 
