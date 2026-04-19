@@ -34,7 +34,60 @@
 
     <!-- Content -->
     {% for product in products %} 
-    
+    {% for product in products %}
+<div class="bg-white rounded-lg shadow hover:shadow-lg transition duration-300 overflow-hidden">
+
+    <!-- Image -->
+    <div class="relative">
+        {% if product.image %}
+            <img src="{{ product.image.url }}" class="w-full h-48 object-cover">
+        {% else %}
+            <div class="w-full h-48 flex items-center justify-center bg-gray-200">
+                No Image
+            </div>
+        {% endif %}
+
+        <!-- Discount badge -->
+        <span class="absolute top-2 left-2 bg-red-500 text-white text-xs px-2 py-1 rounded">
+            -10%
+        </span>
+    </div>
+
+    <!-- Content -->
+    <div class="p-3">
+
+        <!-- Name -->
+        <h2 class="text-sm font-semibold text-gray-800 line-clamp-2">
+            {{ product.name }}
+        </h2>
+
+        <!-- Price -->
+        <p class="text-red-500 font-bold text-lg mt-1">
+            ${{ product.price }}
+        </p>
+
+        <!-- Buttons -->
+        {% if user.is_staff %}
+        <div class="flex justify-between mt-3">
+
+            <a href="{% url 'edit_product' product.id %}" 
+               class="text-blue-500 text-sm hover:underline">
+                Edit
+            </a>
+
+            <form action="{% url 'delete_product' product.id %}" method="POST">
+                {% csrf_token %}
+                <button class="text-red-500 text-sm hover:underline">
+                    Delete
+                </button>
+            </form>
+
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endfor %}
     {% endfor %}
 
 </div>
