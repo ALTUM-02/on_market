@@ -40,13 +40,15 @@
         <!-- Buttons -->
         <div class="flex justify-between items-center">
 
-            <!-- Edit -->
+        {% if product.id %}    <!-- Edit -->
             <a href="{% url 'edit_product' product.id %}" 
                class="bg-blue-500 text-white px-3 py-1 rounded-lg text-sm hover:bg-blue-600 transition">
                 ✏️ Edit
             </a>
+        {% endif %}    
 
             <!-- Delete -->
+            {% %} 
             <form action="{% url 'delete_product' product.id %}" method="POST">
                 {% csrf_token %}
                 <button type="submit" 
