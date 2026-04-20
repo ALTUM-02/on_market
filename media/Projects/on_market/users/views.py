@@ -35,6 +35,11 @@ def api_login(request):
                 "status": "success",
                 "message": "Login successful"
             })
+        else:
+            return JsonResponse({
+                ""
+            })    
+            
 
 def login_view(request):
     if request.method == 'POST':
