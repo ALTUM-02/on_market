@@ -31,7 +31,9 @@ def api_login(request):
         
         if user:
             login(request, user)
-            
+            return JsonResponse({
+                ""
+            })
 
 def login_view(request):
     if request.method == 'POST':
