@@ -39,7 +39,8 @@ def api_login(request):
             return JsonResponse({
                 "status": "error",
                 "message": "Login successful"
-            })    
+            }) 
+    return JsonResponse({"error": "Invalid request"}, status=400)           
             
 
 def login_view(request):
