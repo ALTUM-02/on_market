@@ -23,6 +23,11 @@ def register(request):
 def api_login(request):
     if request.method == "POST":
         data = json.loads(request.body)
+        
+        username = data.get("username")
+        password = data.get("password")
+        
+        user = authenticate
 
 def login_view(request):
     if request.method == 'POST':
