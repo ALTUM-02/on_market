@@ -32,7 +32,8 @@ def api_login(request):
         if user:
             login(request, user)
             return JsonResponse({
-                ""
+                "status": "success",
+                "message": "Login successful"
             })
 
 def login_view(request):
