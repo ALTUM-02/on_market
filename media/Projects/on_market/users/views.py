@@ -22,7 +22,7 @@ def register(request):
 
 def api_login(request):
     if request.method == "POST":
-        data
+        data = json.loads(request.body)
 
 def login_view(request):
     if request.method == 'POST':
