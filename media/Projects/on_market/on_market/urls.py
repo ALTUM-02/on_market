@@ -20,6 +20,7 @@ from products.views import home
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 #from .views import home
 
 from rest_framework.routers import DefaultRouter
