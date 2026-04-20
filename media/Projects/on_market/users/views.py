@@ -30,6 +30,8 @@ def api_login(request):
         user = authenticate(request, username=username, password=password)
         
         if user:
+            login(request, user)
+            
 
 def login_view(request):
     if request.method == 'POST':
