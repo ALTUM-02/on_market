@@ -27,7 +27,7 @@ def api_login(request):
         username = data.get("username")
         password = data.get("password")
         
-        user = authenticate
+        user = authenticate(request, username=username, password=password)
 
 def login_view(request):
     if request.method == 'POST':
