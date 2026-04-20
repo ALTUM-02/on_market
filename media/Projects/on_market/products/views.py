@@ -68,7 +68,6 @@ def home(request):
        # products = Product.objects.filter(name_incontains=query)
     #else:
     products = Product.objects.all()     
-    
     return render(request, 'pages/home.html', {"products": products})
 
 # Create your views here.
