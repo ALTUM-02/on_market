@@ -7,6 +7,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 # views.py
 from django.http import JsonResponse
+import json
 
 def home(request):
     return JsonResponse({"message": "Welcome to On Market API"})
