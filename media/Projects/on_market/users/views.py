@@ -20,6 +20,10 @@ def register(request):
     )
     return Response({"message": "User created"})
 
+def api_login(request):
+    if request.method == "POST":
+        data
+
 def login_view(request):
     if request.method == 'POST':
         Username = request.POST['username']
