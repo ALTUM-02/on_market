@@ -48,6 +48,7 @@ urlpatterns = [
     
     path('api/login/', TokenObtainPairView.as_view()),
     path('api/refresh/', TokenRefreshView.as_view()),
+    path('login/', TemplateView.as_view(template_name='pages/login.html'), name='login'),
 ]
 
 if settings.DEBUG:
