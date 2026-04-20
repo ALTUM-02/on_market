@@ -7,7 +7,7 @@ class Product(models.Model):
     price = models.FloatField()
     description = models.TextField()
     Stock = models.IntegerField()
-    image = models.ImageField(upload_to='products/')
+    image = models.ImageField(upload_to='products/', blank=True, null=True)
     
     def _str_(self):
         return self.name
