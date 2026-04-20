@@ -37,7 +37,8 @@ def api_login(request):
             })
         else:
             return JsonResponse({
-                ""
+                "status": "error",
+                "message": "Login successful"
             })    
             
 
