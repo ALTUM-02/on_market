@@ -11,8 +11,6 @@ import json
 
 def home(request):
     return JsonResponse({"message": "Welcome to On Market API"})
- 
- from django.contrib.auth.models import User
 
 def api_register(request):
     if request.method == "POST":
