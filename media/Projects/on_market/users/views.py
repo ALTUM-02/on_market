@@ -11,7 +11,40 @@ import json
 
 def home(request):
     return JsonResponse({"message": "Welcome to On Market API"})
-   
+ 
+ from django.contrib.auth.models import User
+from django.http import JsonResponse
+
+
+def api_register(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+
+        username = data.get("username")
+        email = data.get("email")
+        password = data.get("password")
+
+        # validation
+        if not username or not password:
+            return JsonResponse({"status": "error", "message": "All fields required"})
+
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({"status": "error", "message": "Username already exists"})
+
+        # create normal user (NOT admin)
+        user = User.objects.create_user(
+            username=username,
+            email=email,
+            password=password
+        )
+
+        user.is_staff = False   # ensure not admin
+        user.is_superuser = False
+        user.save()
+
+        return JsonResponse({"status": "success", "message": "Account created successfully"})
+
+    return JsonResponse({"error": "Invalid request"}, status=400)  
 
 def api_login(request):
     if request.method == "POST":
