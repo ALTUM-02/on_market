@@ -18,7 +18,7 @@ def register(request):
         username=request.data['username'],
         password=request.data['password']
     )
-    return Response({"message": "User created"})
+
 
 def api_login(request):
     if request.method == "POST":
