@@ -16,7 +16,7 @@ def home(request):
 def register(request):
     user = User.objects.create_user(
         username=request.data['username'],
-        password=request.data['password']
+        pas
 
 def api_login(request):
     if request.method == "POST":
