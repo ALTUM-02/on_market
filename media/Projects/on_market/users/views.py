@@ -14,8 +14,7 @@ def home(request):
 
 @api_view(['POST'])
 def register(request):
-    user = User.objects.create_user(
-        username=request.data['usernam
+    user = User.objects.create_       
 
 def api_login(request):
     if request.method == "POST":
