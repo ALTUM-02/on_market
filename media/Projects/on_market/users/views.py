@@ -13,8 +13,7 @@ def home(request):
     return JsonResponse({"message": "Welcome to On Market API"})
 
 @api_view(['POST'])
-def register(request):
-    user = Us       
+de      
 
 def api_login(request):
     if request.method == "POST":
