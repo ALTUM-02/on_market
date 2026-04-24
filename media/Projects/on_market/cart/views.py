@@ -3,7 +3,9 @@ from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .models import Cart, CartItem
+from products.models import Product
 from .serializers import CartSerializer
+import json
 from django.http import JsonResponse
 
 def home(request):
