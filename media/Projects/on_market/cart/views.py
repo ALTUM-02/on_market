@@ -8,12 +8,6 @@ from .serializers import CartSerializer
 import json
 from django.http import JsonResponse
 
-import json
-from django.http import JsonResponse
-from django.contrib.auth.decorators import login_required
-from .models import Cart, CartItem
-from products.models import Product
-
 
 @login_required
 def add_to_cart(request):
