@@ -55,15 +55,15 @@ def remove_from_cart(request, item_id):
 def home(request):
     return JsonResponse({"message": "Welcome to On Market API"})
 
-# Create your views here.
-#class CartViewSet(viewsets.ModelViewSet):
- #   queryset = CartItem.objects.all()
-  #  serializer_class = CartSerializer
-   # Permission_classes = [IsAuthenticated]
+#Create your views here.
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = CartItem.objects.all()
+    serializer_class = CartSerializer
+    Permission_classes = [IsAuthenticated]
     
-    #def get_queryset(self):
-     #   return CartItem.objects.filter(user=self.request.user)
+    def get_queryset(self):
+        return CartItem.objects.filter(user=self.request.user)
     
-    #def perform_create(self, serializer):
-     #   serializer.save(user=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
     

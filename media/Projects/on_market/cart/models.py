@@ -3,7 +3,11 @@ from django.contrib.auth.models import User
 from products.models import Product
 
 # Create your models here.
-#class Cart(models.Model):
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.user.username
  #   session_id = models.CharField(max_length=255)
 
 #class CartItem(models.Model):

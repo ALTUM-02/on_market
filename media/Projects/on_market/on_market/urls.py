@@ -41,6 +41,7 @@ urlpatterns = [
     
     path('', include('products.urls')),
     path('', include('users.urls')),
+    path('', include('cart.urls')),
     path('api/', include(router.urls)),
     
     path('login/', auth_views.LoginView.as_view(template_name='pages/login.html'), name='login'),
