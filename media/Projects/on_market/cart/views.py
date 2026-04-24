@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .models import CartItem
+from .models import Cart, CartItem
 from .serializers import CartSerializer
 from django.http import JsonResponse
 
