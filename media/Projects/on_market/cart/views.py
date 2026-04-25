@@ -87,3 +87,6 @@ def cart_page(request):
             'items': items
         })              
     
+@login_required
+def cart_page(request):
+    return render(request, 'pages/cart.html')
