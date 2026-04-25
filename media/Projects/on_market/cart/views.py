@@ -67,5 +67,23 @@ class CartViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
         
-               
+
+@login_required
+def cart_page(request):
+    
+    if request.user.is_staff:
+        # Admin sees all carts
+        carts = Cart.objects.all()
+        return render(request, 'pages/admin_cart.html', {
+            'carts': carts
+        })
+
+    else:
+        # Normal user sees only their cart
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        items = cart.cartitem_set.all()
+
+        return render(request, 'pages/cart.html', {
+            'items': items
+        })              
     
