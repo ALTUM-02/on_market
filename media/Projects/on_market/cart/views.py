@@ -7,6 +7,12 @@ from products.models import Product
 from .serializers import CartSerializer
 import json
 from django.http import JsonResponse
+from django.contrib.admin.views.decorators import staff_member_required
+
+@staff_member_required
+def admin_cart(request):
+    carts = Cart.objects.all()
+    return render(request, 'pages/admin_cart.html', {'carts': carts})
 
 
 @login_required
