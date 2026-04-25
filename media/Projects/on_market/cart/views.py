@@ -66,4 +66,10 @@ class CartViewSet(viewsets.ModelViewSet):
     
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+        
+@login_required
+def cart_page(request):
+    
+    if request.user.is_staff:
+                
     
