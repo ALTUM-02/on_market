@@ -1,0 +1,23 @@
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Cart
+
+
+@login_required
+def cart_page(request):
+    
+    if request.user.is_staff:
+        # Admin sees all carts
+        carts = Cart.objects.all()
+        return render(request, 'pages/admin_cart.html', {
+            'carts': carts
+        })
+
+    else:
+        # Normal user sees only their cart
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        items = cart.cartitem_set.all()
+
+        return render(request, 'pages/cart.html', {
+            'items': items
+        })
