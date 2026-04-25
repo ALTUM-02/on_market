@@ -65,7 +65,11 @@
   <div id="mobile-menu" class="hidden md:hidden px-4 pb-4 space-y-2 bg-gray-800">
     <a href="#" class="block hover:text-gray-300">Home</a>
     <a href="#" class="block hover:text-gray-300">Products</a>
-    <a href="#" class="block hover:text-gray-300">Cart</a>
+    <a href="{% url 'cart' %}" class="block hover:text-gray-300">Cart 🛒</a>
+
+    {% if user.is_staff %}
+    <a href="{% url 'admin_cart' %}" class="text-yellow-400">Admin Panel</a>
+    {% endif %}
 
     <button onclick="toggleDark()">🌙</button>
   </div>
