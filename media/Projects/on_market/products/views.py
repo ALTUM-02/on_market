@@ -79,6 +79,7 @@ class ProductViewSet(viewsets. ModelViewSet):
     
 
 def product_detail(request, id):
+    try:
         product = Product.objects.get(id=id)
     except Product.DoesNotExist:
         return render(request, 'pages/404.html')  # custom page
