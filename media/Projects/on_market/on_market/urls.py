@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include 
-from products.views import home
+from backend.apps.products.views import home
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
@@ -24,9 +24,9 @@ from django.views.generic import TemplateView
 #from .views import home
 
 from rest_framework.routers import DefaultRouter
-from products.views import ProductViewSet
-from cart.views import CartViewSet
-from orders.views import OrderViewSet
+from backend.apps.products.views import ProductViewSet
+from backend.apps.cart.views import CartViewSet
+from backend.apps.orders.views import OrderViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = DefaultRouter()
