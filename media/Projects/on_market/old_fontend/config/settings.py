@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l2(y220+#3^c+*4e2=$tp48yq3)3a=4en)sbh31(sx8qk@*o02'
+SECRET_KEY = 'django-insecure-df8+1f!%n76-jw1zp5=##r3@inm-t*j^)u1xx#j6@jx#8dkttx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -37,14 +37,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'rest_framework',
-    'apps.products', 
-    'apps.users',
-    'apps.cart',
-    'apps.orders',
-    'corsheaders',
-    'apps.accounts',
 ]
 
 MIDDLEWARE = [
@@ -55,19 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT', 
-]    
 
 ROOT_URLCONF = 'config.urls'
 
@@ -135,6 +115,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR / 'media'
