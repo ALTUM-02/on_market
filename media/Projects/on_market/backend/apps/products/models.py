@@ -10,5 +10,5 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', blank=True, null=True)
     
     def _str_(self):
-        return s
+        return self.name
      
