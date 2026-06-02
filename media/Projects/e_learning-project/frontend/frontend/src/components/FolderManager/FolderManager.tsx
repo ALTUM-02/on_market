@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { folderApi } from '../api/client';
-import { useDataStore, useThemeStore } from '../store';
+import { folderApi } from '../../api/client';
+import { useDataStore, useThemeStore } from '../../store';
 
 interface FolderManagerProps {
   onSuccess?: () => void;

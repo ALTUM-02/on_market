@@ -1,5 +1,5 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { textApi } from '../api/client';
+import { textApi } from '../../api/client';
 import { useDataStore, useThemeStore } from '../store';
 
 interface TextEditorProps {
