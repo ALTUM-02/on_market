@@ -27,6 +27,7 @@ interface DataStore {
   setFolders: (arr: any[]) => void;
   setFiles: (arr: any[]) => void;
   setTexts: (arr: any[]) => void;
+  addText: (t: any) => void;
   addFolder: (f: any) => void;
   removeFolder: (id: number) => void;
   addFile: (f: any) => void;
@@ -68,6 +69,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     addFolder: (f: any) => setFolders((s) => [f, ...s]),
     removeFolder: (id: number) => setFolders((s) => s.filter((x) => x.id !== id)),
     addFile: (f: any) => setFiles((s) => [f, ...s]),
+    addText: (t: any) => setTexts((s) => [t, ...s]),
   };
 
   return (
