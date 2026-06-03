@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore, useThemeStore, useDataStore } from '../store';
-import { dashboardApi } from '../api/client';
-import { Navbar } from '../components/Navbar/Navbar';
-import { FileUpload } from '../components/FileUpload/FileUpload';
-import { TextEditor } from '../components/TextEditor/TextEditor';
-import { FolderManager } from '../components/FolderManager/FolderManager';
+import { dashboardApi, folderApi, fileApi, textApi } from '../api/client';
+import { Navbar } from '../components/Navbar';
+import { FileUpload } from '../components/FileUpload';
+import { TextEditor } from '../components/TextEditor';
+import { FolderManager } from '../components/FolderManager';
 
-type Tab = 'dashboard' | 'upload' | 'text' | 'folders';
+type Tab = 'dashboard' | 'upload' | 'text' | 'folders' | 'myfiles';
 
 export function DashboardPage() {
   const navigate = useNavigate();
-  const { user, setUser, setLoading: setAuthLoading } = useAuthStore();
+  const { user, isAuthenticated, setUser, setLoading: setAuthLoading } = useAuthStore();
   const { darkMode } = useThemeStore();
   const { setFolders, setFiles, setTexts, files, texts } = useDataStore();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
@@ -19,7 +19,7 @@ export function DashboardPage() {
   const [stats, setStats] = useState({ total_folders: 0, total_files: 0, total_texts: 0 });
 
   useEffect(() => {
-    const fetchDashboard = async () => {
+    const checkAuth = async () => {
       try {
         const response = await dashboardApi.getDashboard();
         if (response.authenticated) {
@@ -39,8 +39,13 @@ export function DashboardPage() {
       }
     };
 
-    fetchDashboard();
-  }, []);
+    if (!isAuthenticated) {
+      checkAuth();
+    } else {
+      setLoading(false);
+      setAuthLoading(false);
+    }
+  }, [isAuthenticated]);
 
   const refreshData = async () => {
     try {
@@ -67,6 +72,7 @@ export function DashboardPage() {
     { id: 'upload', label: 'Upload Files', icon: '📁' },
     { id: 'text', label: 'Text Editor', icon: '📝' },
     { id: 'folders', label: 'Folders', icon: '📂' },
+    { id: 'myfiles', label: 'My Files', icon: '🗂️' },
   ] as const;
 
   return (
@@ -89,7 +95,7 @@ export function DashboardPage() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+              className={`px-4 py-2 rounded-lg font-medium transition-colors cursor-animate-button ${
                 activeTab === tab.id
                   ? 'bg-blue-500 text-white'
                   : darkMode
@@ -237,6 +243,94 @@ export function DashboardPage() {
         {/* Folders Tab */}
         {activeTab === 'folders' && (
           <FolderManager onSuccess={refreshData} />
+        )}
+
+        {/* My Files Tab - View All Uploaded Files */}
+        {activeTab === 'myfiles' && (
+          <div className="space-y-6">
+            <div className={`p-6 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+              <h2 className={`text-xl font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+                All Uploaded Files
+              </h2>
+              {files.length === 0 ? (
+                <p className={`${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  No files uploaded yet. Go to Upload Files to add files.
+                </p>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {files.map((file) => (
+                    <div
+                      key={file.id}
+                      className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'} transition-colors cursor-pointer`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="text-3xl">
+                          {file.file_type === 'image' ? '🖼️' :
+                           file.file_type === 'animation' ? '🎨' :
+                           file.file_type === 'audio' ? '🎤' : '🎬'}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className={`font-medium truncate ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+                            {file.filename}
+                          </p>
+                          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                            {file.file_type} • {new Date(file.created_at).toLocaleDateString()}
+                          </p>
+                          {file.description && (
+                            <p className={`text-xs mt-1 truncate ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
+                              {file.description}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* All Texts */}
+            <div className={`p-6 rounded-lg shadow-md ${darkMode ? 'bg-gray-800' : 'bg-white'}`}>
+              <h2 className={`text-xl font-semibold mb-4 ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+                All Text Documents
+              </h2>
+              {texts.length === 0 ? (
+                <p className={`${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                  No text documents created yet. Go to Text Editor to create one.
+                </p>
+              ) : (
+                <div className="space-y-3">
+                  {texts.map((text) => (
+                    <div
+                      key={text.id}
+                      className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'} transition-colors cursor-pointer`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className={`font-medium ${darkMode ? 'text-white' : 'text-gray-800'}`}>
+                            {text.title}
+                          </p>
+                          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
+                            {text.font_family} • {new Date(text.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                        <span
+                          className={`text-sm px-2 py-1 rounded ${
+                            text.font_family === 'serif' 
+                              ? 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300'
+                              : 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300'
+                          }`}
+                          style={{ fontFamily: text.font_family === 'serif' ? 'Georgia, serif' : 'Arial, sans-serif' }}
+                        >
+                          {text.font_family}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </div>
