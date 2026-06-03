@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { folderApi } from '../../api/client';
 import { useDataStore, useThemeStore } from '../../store';
 
