@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { textApi } from '../../api/client';
-import { useDataStore, useThemeStore } from '../../store';
+import { textApi } from '../api/client';
+import { useDataStore, useThemeStore } from '../store';
 
 interface TextEditorProps {
   onSuccess?: () => void;
@@ -50,13 +50,12 @@ const BG_COLORS = [
 
 export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
   const { darkMode } = useThemeStore();
-  const { folders, addText } = useDataStore();
+  const { addText } = useDataStore();
   const editorRef = useRef<HTMLDivElement>(null);
   
   const [title, setTitle] = useState(initialData?.title || '');
   const [fontFamily, setFontFamily] = useState(initialData?.font_family || 'serif');
   const [fontSize, setFontSize] = useState('16');
-  const [selectedFolder, setSelectedFolder] = useState<number | ''>('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [showFontMenu, setShowFontMenu] = useState(false);
@@ -168,18 +167,10 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
     setError('');
 
     try {
-      const data: { title: string; content: string; font_family: string; folder?: number } = {
-        title,
-        content,
-        font_family: fontFamily,
-      };
-      if (selectedFolder) {
-        data.folder = selectedFolder;
-      }
+      const data = { title, content, font_family: fontFamily };
       const result = await textApi.create(data);
       addText(result);
       setTitle('');
-      setSelectedFolder('');
       if (editorRef.current) {
         editorRef.current.innerHTML = '';
       }
@@ -210,7 +201,7 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
       type="button"
       onClick={onClick}
       title={title}
-      className={`p-2 rounded transition-colors ${
+      className={`p-2 rounded transition-colors cursor-animate-button ${
         active 
           ? 'bg-blue-500 text-white' 
           : darkMode 
@@ -366,7 +357,7 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
               >
                 <div className="flex items-center gap-1">
                   <span className="text-sm">A</span>
-                  <div className="w-3 h-3 rounded-full bg-linear-to-br from-red-500 via-green-500 to-blue-500" />
+                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-red-500 via-green-500 to-blue-500" />
                 </div>
               </ToolbarButton>
               <DropdownMenu show={showColorMenu === 'text'} onClose={() => setShowColorMenu(null)}>
@@ -488,29 +479,6 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
           </div>
         </div>
 
-        {/* Folder selection */}
-        <div>
-          <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
-            Folder (optional)
-          </label>
-          <select
-            value={selectedFolder}
-            onChange={(e) => setSelectedFolder(e.target.value ? Number(e.target.value) : '')}
-            className={`w-full px-3 py-2 border rounded-lg ${
-              darkMode
-                ? 'bg-gray-700 border-gray-600 text-white'
-                : 'bg-white border-gray-300 text-gray-900'
-            } focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-          >
-            <option value="">No folder</option>
-            {folders.map((folder) => (
-              <option key={folder.id} value={folder.id}>
-                {folder.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
         {/* Editor Area */}
         <div>
           <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
@@ -520,7 +488,7 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
             ref={editorRef}
             contentEditable
             onInput={handleContentChange}
-            className={`w-full min-h-300px p-4 border rounded-lg overflow-auto ${
+            className={`w-full min-h-[300px] p-4 border rounded-lg overflow-auto ${
               darkMode
                 ? 'bg-gray-700 border-gray-600 text-white'
                 : 'bg-white border-gray-300 text-gray-900'
