@@ -19,7 +19,7 @@ export function DashboardPage() {
   const [stats, setStats] = useState({ total_folders: 0, total_files: 0, total_texts: 0 });
 
   useEffect(() => {
-    const checkAuth = async () => {
+    const fetchDashboard = async () => {
       try {
         const response = await dashboardApi.getDashboard();
         if (response.authenticated) {
@@ -39,13 +39,8 @@ export function DashboardPage() {
       }
     };
 
-    if (!isAuthenticated) {
-      checkAuth();
-    } else {
-      setLoading(false);
-      setAuthLoading(false);
-    }
-  }, [isAuthenticated]);
+    fetchDashboard();
+  }, []);
 
   const refreshData = async () => {
     try {

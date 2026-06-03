@@ -50,12 +50,13 @@ const BG_COLORS = [
 
 export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
   const { darkMode } = useThemeStore();
-  const { addText } = useDataStore();
+  const { folders, addText } = useDataStore();
   const editorRef = useRef<HTMLDivElement>(null);
   
   const [title, setTitle] = useState(initialData?.title || '');
   const [fontFamily, setFontFamily] = useState(initialData?.font_family || 'serif');
   const [fontSize, setFontSize] = useState('16');
+  const [selectedFolder, setSelectedFolder] = useState<number | ''>('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
   const [showFontMenu, setShowFontMenu] = useState(false);
@@ -167,10 +168,18 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
     setError('');
 
     try {
-      const data = { title, content, font_family: fontFamily };
+      const data: { title: string; content: string; font_family: string; folder?: number } = {
+        title,
+        content,
+        font_family: fontFamily,
+      };
+      if (selectedFolder) {
+        data.folder = selectedFolder;
+      }
       const result = await textApi.create(data);
       addText(result);
       setTitle('');
+      setSelectedFolder('');
       if (editorRef.current) {
         editorRef.current.innerHTML = '';
       }
@@ -477,6 +486,29 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
               Clear Format
             </button>
           </div>
+        </div>
+
+        {/* Folder selection */}
+        <div>
+          <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+            Folder (optional)
+          </label>
+          <select
+            value={selectedFolder}
+            onChange={(e) => setSelectedFolder(e.target.value ? Number(e.target.value) : '')}
+            className={`w-full px-3 py-2 border rounded-lg ${
+              darkMode
+                ? 'bg-gray-700 border-gray-600 text-white'
+                : 'bg-white border-gray-300 text-gray-900'
+            } focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+          >
+            <option value="">No folder</option>
+            {folders.map((folder) => (
+              <option key={folder.id} value={folder.id}>
+                {folder.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Editor Area */}

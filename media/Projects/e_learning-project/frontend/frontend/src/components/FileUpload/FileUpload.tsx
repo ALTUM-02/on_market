@@ -10,10 +10,11 @@ interface FileUploadProps {
 
 export function FileUpload({ onSuccess }: FileUploadProps) {
   const { darkMode } = useThemeStore();
-  const { addFile } = useDataStore();
+  const { folders, addFile } = useDataStore();
   const [fileType, setFileType] = useState<FileType>('image');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [description, setDescription] = useState('');
+  const [selectedFolder, setSelectedFolder] = useState<number | ''>('');
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -41,10 +42,14 @@ export function FileUpload({ onSuccess }: FileUploadProps) {
       formData.append('file_type', fileType);
       formData.append('description', description);
 
+      if (selectedFolder) {
+        formData.append('folder', String(selectedFolder));
+      }
       const result = await fileApi.upload(formData);
       addFile(result);
       setSelectedFile(null);
       setDescription('');
+      setSelectedFolder('');
       if (fileInputRef.current) {
         fileInputRef.current.value = '';
       }
@@ -124,6 +129,28 @@ export function FileUpload({ onSuccess }: FileUploadProps) {
 
         <div>
           <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+            Folder (optional)
+          </label>
+          <select
+            value={selectedFolder}
+            onChange={(e) => setSelectedFolder(e.target.value ? Number(e.target.value) : '')}
+            className={`w-full px-3 py-2 border rounded-lg ${
+              darkMode
+                ? 'bg-gray-700 border-gray-600 text-white'
+                : 'bg-white border-gray-300 text-gray-900'
+            } focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+          >
+            <option value="">No folder</option>
+            {folders.map((folder) => (
+              <option key={folder.id} value={folder.id}>
+                {folder.name}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label className={`block text-sm font-medium mb-2 ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
             Description (optional)
           </label>
           <textarea
@@ -154,10 +181,10 @@ export function FileUpload({ onSuccess }: FileUploadProps) {
         <button
           onClick={handleUpload}
           disabled={uploading || !selectedFile}
-          className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
+          className={`w-full py-2 px-4 rounded-lg font-medium transition duration-150 ease-in-out transform ${
             uploading || !selectedFile
               ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-500 hover:bg-blue-600 text-white'
+              : 'bg-blue-500 hover:bg-blue-600 hover:-translate-y-0.5 text-white'
           }`}
         >
           {uploading ? 'Uploading...' : 'Upload'}

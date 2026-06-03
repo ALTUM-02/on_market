@@ -7,6 +7,16 @@ input[type="submit"],
 input[type="reset"],
 [role="button"] {
   cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+button:not(:disabled):hover,
+a:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+[role="button"]:hover {
+  transform: translateY(-1px);
 }
 
 button:disabled,
