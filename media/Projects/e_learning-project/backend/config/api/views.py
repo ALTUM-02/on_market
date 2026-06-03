@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from rest_framework import viewsets, status, permissions
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -117,10 +118,12 @@ class FolderViewSet(viewsets.ModelViewSet):
 class UploadedFileViewSet(viewsets.ModelViewSet):
     """ViewSet for UploadedFile model"""
     serializer_class = UploadedFileSerializer
-    
+    permission_classes = [permissions.IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+
     def get_queryset(self):
         return UploadedFile.objects.filter(user=self.request.user)
-    
+
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
