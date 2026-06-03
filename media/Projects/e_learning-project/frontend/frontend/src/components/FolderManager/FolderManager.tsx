@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { folderApi } from '../api/client';
-import { useDataStore, useThemeStore } from '../store';
+import { folderApi } from '../../api/client';
+import { useDataStore, useThemeStore } from '../../store';
 
 interface FolderManagerProps {
   onSuccess?: () => void;
@@ -16,7 +16,6 @@ export function FolderManager({ onSuccess }: FolderManagerProps) {
   const handleCreateFolder = async () => {
     if (!newFolderName.trim()) {
       setError('Please enter a folder name');
-      return;
     }
 
     setCreating(true);
@@ -89,14 +88,12 @@ export function FolderManager({ onSuccess }: FolderManagerProps) {
             </p>
           ) : (
             folders.map((folder) => (
-              <div
-                key={folder.id}
-                className={`flex items-center justify-between p-3 rounded-lg ${
-                  darkMode ? 'bg-gray-700' : 'bg-gray-100'
-                }`}
-              >
-                <div className="flex items-center gap-2">
                   <svg className={`w-5 h-5 ${darkMode ? 'text-yellow-400' : 'text-yellow-500'}`} fill="currentColor" viewBox="0 0 20 20">
+              </div>
+            </div>
+          </div>
+        );
+      }
                     <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
                   </svg>
                   <span className={darkMode ? 'text-white' : 'text-gray-800'}>
@@ -117,6 +114,7 @@ export function FolderManager({ onSuccess }: FolderManagerProps) {
               </div>
             ))
           )}
+        </div>
         </div>
       </div>
     </div>
