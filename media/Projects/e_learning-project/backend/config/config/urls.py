@@ -28,7 +28,7 @@ urlpatterns = [
     path(
         "api/",
         include(
-            "config.api.urls"
+            "api.urls"
         )
     ),
 
