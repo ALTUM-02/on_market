@@ -94,6 +94,7 @@ class MeView(APIView):
         }, status=status.HTTP_401_UNAUTHORIZED)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class FolderViewSet(viewsets.ModelViewSet):
     """ViewSet for Folder model"""
     serializer_class = FolderSerializer
@@ -105,6 +106,7 @@ class FolderViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class UploadedFileViewSet(viewsets.ModelViewSet):
     """ViewSet for UploadedFile model"""
     serializer_class = UploadedFileSerializer
@@ -116,6 +118,7 @@ class UploadedFileViewSet(viewsets.ModelViewSet):
         serializer.save(user=self.request.user)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class TextContentViewSet(viewsets.ModelViewSet):
     """ViewSet for TextContent model"""
     serializer_class = TextContentSerializer
