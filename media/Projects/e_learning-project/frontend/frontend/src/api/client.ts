@@ -1,9 +1,23 @@
 const API_BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
+const TOKEN_KEY = 'AUTH_ACCESS_TOKEN';
 
 interface RequestOptions {
   method?: string;
   body?: FormData | object;
   headers?: Record<string, string>;
+}
+
+function getAuthToken(): string | null {
+  return typeof window !== 'undefined' ? localStorage.getItem(TOKEN_KEY) : null;
+}
+
+export function setAuthToken(token: string | null) {
+  if (typeof window === 'undefined') return;
+  if (token) {
+    localStorage.setItem(TOKEN_KEY, token);
+  } else {
+    localStorage.removeItem(TOKEN_KEY);
+  }
 }
 
 async function fetchApi<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
@@ -13,6 +27,11 @@ async function fetchApi<T>(endpoint: string, options: RequestOptions = {}): Prom
     'Content-Type': 'application/json',
     ...headers,
   };
+
+  const token = getAuthToken();
+  if (token && !requestHeaders.Authorization) {
+    requestHeaders.Authorization = `Bearer ${token}`;
+  }
 
   const config: RequestInit = {
     method,
@@ -42,22 +61,34 @@ async function fetchApi<T>(endpoint: string, options: RequestOptions = {}): Prom
 
 // Auth API
 export const authApi = {
-  login: (username: string, password: string) =>
-    fetchApi<{ success: boolean; user: any; message: string }>('/auth/login/', {
+  login: async (username: string, password: string) => {
+    const response = await fetchApi<{ success: boolean; user: any; access: string; refresh: string; message: string }>('/auth/login/', {
       method: 'POST',
       body: { username, password },
-    }),
+    });
+    if (response.access) {
+      setAuthToken(response.access);
+    }
+    return response;
+  },
 
-  register: (data: { username: string; email: string; password: string; password_confirm: string; first_name?: string; last_name?: string }) =>
-    fetchApi<{ success: boolean; user: any; message: string }>('/auth/register/', {
+  register: async (data: { username: string; email: string; password: string; password_confirm: string; first_name?: string; last_name?: string }) => {
+    const response = await fetchApi<{ success: boolean; user: any; access: string; refresh: string; message: string }>('/auth/register/', {
       method: 'POST',
       body: data,
-    }),
+    });
+    if (response.access) {
+      setAuthToken(response.access);
+    }
+    return response;
+  },
 
-  logout: () =>
-    fetchApi<{ success: boolean; message: string }>('/auth/logout/', {
+  logout: async () => {
+    setAuthToken(null);
+    return fetchApi<{ success: boolean; message: string }>('/auth/logout/', {
       method: 'POST',
-    }),
+    });
+  },
 
   me: () =>
     fetchApi<{ authenticated: boolean; user: any }>('/auth/me/', {

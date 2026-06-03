@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from decouple import config, Csv
 from datetime import timedelta
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -163,6 +164,9 @@ CORS_ALLOWED_ORIGINS = config(
 
 # Allow cookies to be sent in cross-site requests (frontend uses `credentials: 'include'`)
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Authorization',
+]
 
 # Session cookies must be set with SameSite=None for cross-site XHR in local dev.
 SESSION_COOKIE_SAMESITE = 'None'

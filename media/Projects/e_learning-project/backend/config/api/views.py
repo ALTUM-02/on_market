@@ -5,6 +5,7 @@ from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -40,9 +41,12 @@ class AuthView(APIView):
             )
             if user:
                 login(request, user)
+                refresh = RefreshToken.for_user(user)
                 return Response({
                     'success': True,
                     'user': UserSerializer(user).data,
+                    'access': str(refresh.access_token),
+                    'refresh': str(refresh),
                     'message': 'Login successful'
                 })
             return Response({
@@ -62,9 +66,12 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
+            refresh = RefreshToken.for_user(user)
             return Response({
                 'success': True,
                 'user': UserSerializer(user).data,
+                'access': str(refresh.access_token),
+                'refresh': str(refresh),
                 'message': 'Registration successful'
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
