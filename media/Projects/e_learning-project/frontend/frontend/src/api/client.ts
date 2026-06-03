@@ -29,7 +29,8 @@ async function fetchApi<T>(endpoint: string, options: RequestOptions = {}): Prom
     }
   }
 
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+  const url = `${API_BASE_URL.replace(/\/+$/, '')}/${endpoint.replace(/^\/+/, '')}`;
+  const response = await fetch(url, config);
   
   if (!response.ok) {
     const error = await response.json().catch(() => ({ error: 'An error occurred' }));
