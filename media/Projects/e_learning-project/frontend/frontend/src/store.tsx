@@ -10,6 +10,7 @@ interface User {
 interface AuthStore {
   user: User | null;
   isAuthenticated: boolean;
+  loading: boolean;
   setUser: (u: User | null) => void;
   setLoading: (v: boolean) => void;
   logout: () => void;
@@ -44,6 +45,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const authStore: AuthStore = {
     user,
     isAuthenticated: !!user,
+    loading: authLoading,
     setUser,
     setLoading: setAuthLoading,
     logout: () => setUser(null),

@@ -10,6 +10,7 @@ interface User {
 interface AuthStore {
   user: User | null;
   isAuthenticated: boolean;
+  loading: boolean;
   setUser: (u: User | null) => void;
   setLoading: (v: boolean) => void;
   logout: () => void;
