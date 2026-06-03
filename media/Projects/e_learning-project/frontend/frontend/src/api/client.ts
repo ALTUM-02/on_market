@@ -9,19 +9,21 @@ interface RequestOptions {
 async function fetchApi<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
   const { method = 'GET', body, headers = {} } = options;
 
+  const requestHeaders: Record<string, string> = {
+    'Content-Type': 'application/json',
+    ...headers,
+  };
+
   const config: RequestInit = {
     method,
-    headers: {
-      'Content-Type': 'application/json',
-      ...headers,
-    },
+    headers: requestHeaders,
     credentials: 'include',
   };
 
   if (body) {
     if (body instanceof FormData) {
       config.body = body;
-      delete config.headers['Content-Type'];
+      delete requestHeaders['Content-Type'];
     } else {
       config.body = JSON.stringify(body);
     }
