@@ -164,6 +164,12 @@ CORS_ALLOWED_ORIGINS = config(
 # Allow cookies to be sent in cross-site requests (frontend uses `credentials: 'include'`)
 CORS_ALLOW_CREDENTIALS = True
 
+# Session cookies must be set with SameSite=None for cross-site XHR in local dev.
+SESSION_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SAMESITE = 'None'
+CSRF_COOKIE_SECURE = False
+
 # For Django's CSRF checks (useful during development when frontend served from another origin)
 CSRF_TRUSTED_ORIGINS = config(
     'CSRF_TRUSTED_ORIGINS',
