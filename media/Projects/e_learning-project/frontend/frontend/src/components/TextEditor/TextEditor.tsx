@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
-import { textApi } from '../api/client';
-import { useDataStore, useThemeStore } from '../store';
+import { textApi } from '../../api/client';
+import { useDataStore, useThemeStore } from '../../store';
 
 interface TextEditorProps {
   onSuccess?: () => void;
@@ -357,7 +357,7 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
               >
                 <div className="flex items-center gap-1">
                   <span className="text-sm">A</span>
-                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-red-500 via-green-500 to-blue-500" />
+                  <div className="w-3 h-3 rounded-full bg-linear-to-br from-red-500 via-green-500 to-blue-500" />
                 </div>
               </ToolbarButton>
               <DropdownMenu show={showColorMenu === 'text'} onClose={() => setShowColorMenu(null)}>
@@ -488,7 +488,7 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
             ref={editorRef}
             contentEditable
             onInput={handleContentChange}
-            className={`w-full min-h-[300px] p-4 border rounded-lg overflow-auto ${
+            className={`w-full min-h-300px p-4 border rounded-lg overflow-auto ${
               darkMode
                 ? 'bg-gray-700 border-gray-600 text-white'
                 : 'bg-white border-gray-300 text-gray-900'

@@ -26,7 +26,7 @@ export function FileUpload({ onSuccess }: FileUploadProps) {
   };
 
   const handleUpload = async () => {
-}
+    if (!selectedFile) {
       return;
     }
 

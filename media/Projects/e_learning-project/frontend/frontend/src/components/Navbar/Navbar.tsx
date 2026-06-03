@@ -1,7 +1,6 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore, useThemeStore } from '../store';
-import { authApi } from '../api/client';
+import { useAuthStore, useThemeStore } from '../../store';
+import { authApi } from '../../api/client';
 
 export function Navbar() {
   const navigate = useNavigate();
