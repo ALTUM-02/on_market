@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore, useThemeStore, useDataStore } from '../store';
-import { dashboardApi, folderApi, fileApi, textApi } from '../api/client';
+import { dashboardApi } from '../api/client';
 import { Navbar } from '../components/Navbar/Navbar';
 import { FileUpload } from '../components/FileUpload/FileUpload';
 import { TextEditor } from '../components/TextEditor/TextEditor';
