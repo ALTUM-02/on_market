@@ -13,6 +13,8 @@ from .serializers import (
     UserSerializer, UserProfileSerializer, FolderSerializer,
     UploadedFileSerializer, TextContentSerializer, LoginSerializer, RegisterSerializer
 )
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
@@ -23,6 +25,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return obj.user == request.user
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AuthView(APIView):
     """Authentication endpoints"""
     permission_classes = [permissions.AllowAny]
@@ -49,6 +52,7 @@ class AuthView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class RegisterView(APIView):
     """User registration"""
     permission_classes = [permissions.AllowAny]
@@ -66,6 +70,7 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class LogoutView(APIView):
     """Logout endpoint"""
     def post(self, request):
