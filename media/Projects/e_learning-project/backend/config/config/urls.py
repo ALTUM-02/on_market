@@ -26,13 +26,6 @@ urlpatterns = [
     ),
 
     path(
-        "api/auth/",
-        include(
-            "authentication.urls"
-        )
-    ),
-
-    path(
         "api/",
         include(
             "config.api.urls"
