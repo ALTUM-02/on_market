@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore, useThemeStore } from '../store';
 import { authApi } from '../api/client';
 
 export function LoginPage() {
   const navigate = useNavigate();
-  const { setUser, setLoading } = useAuthStore();
+  const { setUser } = useAuthStore();
   const { darkMode } = useThemeStore();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');

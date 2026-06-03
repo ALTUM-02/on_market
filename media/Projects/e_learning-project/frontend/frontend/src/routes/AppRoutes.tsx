@@ -8,7 +8,7 @@ import Quiz from "../pages/Quiz";
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Dashboard />} />
+      <Route path="/" element={<DashboardPage />} />
       <Route path="/home" element={<Home />} />
       <Route path="/lessons" element={<Lessons />} />
       <Route path="/multimedia" element={<Home />} />
