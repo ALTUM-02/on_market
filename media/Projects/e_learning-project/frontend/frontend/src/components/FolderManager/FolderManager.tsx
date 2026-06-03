@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { folderApi } from '../../api/client';
-import { useDataStore, useThemeStore } from '../../store';
+import React, { useState } from 'react';
+import { folderApi } from '../api/client';
+import { useDataStore, useThemeStore } from '../store';
 
 interface FolderManagerProps {
   onSuccess?: () => void;
@@ -68,7 +68,7 @@ export function FolderManager({ onSuccess }: FolderManagerProps) {
           <button
             onClick={handleCreateFolder}
             disabled={creating}
-            className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+            className={`px-4 py-2 rounded-lg font-medium transition-colors cursor-animate-button ${
               creating
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-blue-500 hover:bg-blue-600 text-white'
@@ -108,7 +108,7 @@ export function FolderManager({ onSuccess }: FolderManagerProps) {
                 </div>
                 <button
                   onClick={() => handleDeleteFolder(folder.id)}
-                  className="p-1 text-red-500 hover:bg-red-100 dark:hover:bg-red-900 rounded transition-colors"
+                  className="p-1 text-red-500 hover:bg-red-100 dark:hover:bg-red-900 rounded transition-colors cursor-animate-button"
                 >
                   <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
