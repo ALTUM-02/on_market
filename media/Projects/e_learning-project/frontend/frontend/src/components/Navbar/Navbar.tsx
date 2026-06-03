@@ -1,6 +1,7 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore, useThemeStore } from '../../store';
-import { authApi } from '../../api/client';
+import { useAuthStore, useThemeStore } from '../store';
+import { authApi } from '../api/client';
 
 export function Navbar() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ export function Navbar() {
           <div className="flex items-center">
             <button
               onClick={() => navigate('/dashboard')}
-              className="text-xl font-bold text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              className="text-xl font-bold text-gray-800 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-animate-button"
             >
               My Dashboard
             </button>
@@ -35,7 +36,7 @@ export function Navbar() {
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-animate-button"
               aria-label="Toggle dark mode"
             >
               {darkMode ? (
@@ -55,7 +56,7 @@ export function Navbar() {
               </span>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors"
+                className="px-4 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg transition-colors cursor-animate-button"
               >
                 Logout
               </button>
