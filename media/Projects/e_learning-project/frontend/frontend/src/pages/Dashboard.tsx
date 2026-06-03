@@ -11,7 +11,7 @@ type Tab = 'dashboard' | 'upload' | 'text' | 'folders';
 
 export function DashboardPage() {
   const navigate = useNavigate();
-  const { user, isAuthenticated, setUser, setLoading: setAuthLoading } = useAuthStore();
+  const { user, setUser, setLoading: setAuthLoading } = useAuthStore();
   const { darkMode } = useThemeStore();
   const { setFolders, setFiles, setTexts, files, texts } = useDataStore();
   const [activeTab, setActiveTab] = useState<Tab>('dashboard');
