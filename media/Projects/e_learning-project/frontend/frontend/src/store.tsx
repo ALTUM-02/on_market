@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { authApi } from './api/client';
 
 // Types
 interface User {
@@ -40,7 +41,34 @@ const DataContext = createContext<DataStore | undefined>(undefined);
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [authLoading, setAuthLoading] = useState<boolean>(false);
+  const [authLoading, setAuthLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadCurrentUser() {
+      try {
+        const response = await authApi.me();
+        if (mounted && response.authenticated) {
+          setUser(response.user);
+        }
+      } catch (error) {
+        if (mounted) {
+          setUser(null);
+        }
+      } finally {
+        if (mounted) {
+          setAuthLoading(false);
+        }
+      }
+    }
+
+    loadCurrentUser();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const authStore: AuthStore = {
     user,
@@ -48,7 +76,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     loading: authLoading,
     setUser,
     setLoading: setAuthLoading,
-    logout: () => setUser(null),
+    logout: () => {
+      setUser(null);
+      authApi.logout().catch(() => null);
+    },
   };
 
   const [darkMode, setDarkMode] = useState<boolean>(false);
