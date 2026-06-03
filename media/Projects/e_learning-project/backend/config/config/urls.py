@@ -35,6 +35,13 @@ urlpatterns = [
     path(
         "api/",
         include(
+            "config.api.urls"
+        )
+    ),
+
+    path(
+        "api/",
+        include(
             "lessons.urls"
         )
     ),
