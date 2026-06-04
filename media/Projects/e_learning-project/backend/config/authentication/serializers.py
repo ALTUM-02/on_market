@@ -63,12 +63,10 @@ class RegisterSerializer(serializers.ModelSerializer):
         },
     )
     email = serializers.EmailField(
-        required=True,
-        allow_blank=False,
+        required=False,
+        allow_blank=True,
         trim_whitespace=True,
         error_messages={
-            'blank': 'Email cannot be empty.',
-            'required': 'Email is required.',
             'null': 'Email cannot be null.',
             'invalid': 'Enter a valid email address.',
         },
@@ -120,7 +118,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate_email(self, value):
         email = value.strip().lower()
-        if User.objects.filter(email__iexact=email).exists():
+        if email and User.objects.filter(email__iexact=email).exists():
             raise serializers.ValidationError('A user with this email already exists.')
         return email
 

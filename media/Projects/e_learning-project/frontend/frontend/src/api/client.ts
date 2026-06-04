@@ -24,6 +24,26 @@ export function setAuthToken(token: string | null) {
   }
 }
 
+function formatApiError(error: any): string {
+  if (!error) return 'An error occurred';
+  if (typeof error === 'string') return error;
+  if (typeof error.error === 'string') return error.error;
+  if (typeof error.detail === 'string') return error.detail;
+
+  const messages = Object.entries(error).flatMap(([field, value]) => {
+    const label = field === 'non_field_errors' ? '' : `${field}: `;
+    if (Array.isArray(value)) {
+      return value.map((message) => `${label}${message}`);
+    }
+    if (typeof value === 'string') {
+      return `${label}${value}`;
+    }
+    return [];
+  });
+
+  return messages.length > 0 ? messages.join(' ') : 'An error occurred';
+}
+
 async function fetchApi<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
   const { method = 'GET', body, headers = {} } = options;
 
@@ -57,7 +77,7 @@ async function fetchApi<T>(endpoint: string, options: RequestOptions = {}): Prom
   
   if (!response.ok) {
     const error = await response.json().catch(() => ({ error: 'An error occurred' }));
-    throw new Error(error.error || 'An error occurred');
+    throw new Error(formatApiError(error));
   }
 
   return response.json();
