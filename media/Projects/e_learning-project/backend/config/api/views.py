@@ -81,6 +81,8 @@ class RegisterView(APIView):
 @method_decorator(csrf_exempt, name='dispatch')
 class LogoutView(APIView):
     """Logout endpoint"""
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request):
         logout(request)
         return Response({
@@ -91,6 +93,8 @@ class LogoutView(APIView):
 
 class MeView(APIView):
     """Current user info"""
+    permission_classes = [permissions.AllowAny]
+
     def get(self, request):
         if request.user.is_authenticated:
             return Response({
@@ -98,8 +102,9 @@ class MeView(APIView):
                 'user': UserSerializer(request.user).data
             })
         return Response({
-            'authenticated': False
-        }, status=status.HTTP_401_UNAUTHORIZED)
+            'authenticated': False,
+            'user': None
+        })
 
 
 @method_decorator(csrf_exempt, name='dispatch')

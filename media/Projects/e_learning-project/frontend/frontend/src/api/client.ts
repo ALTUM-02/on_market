@@ -11,6 +11,10 @@ function getAuthToken(): string | null {
   return typeof window !== 'undefined' ? localStorage.getItem(TOKEN_KEY) : null;
 }
 
+export function hasAuthToken(): boolean {
+  return Boolean(getAuthToken());
+}
+
 export function setAuthToken(token: string | null) {
   if (typeof window === 'undefined') return;
   if (token) {
@@ -84,16 +88,24 @@ export const authApi = {
   },
 
   logout: async () => {
-    setAuthToken(null);
-    return fetchApi<{ success: boolean; message: string }>('/auth/logout/', {
-      method: 'POST',
-    });
+    try {
+      return await fetchApi<{ success: boolean; message: string }>('/auth/logout/', {
+        method: 'POST',
+      });
+    } finally {
+      setAuthToken(null);
+    }
   },
 
-  me: () =>
-    fetchApi<{ authenticated: boolean; user: any }>('/auth/me/', {
+  me: () => {
+    if (!hasAuthToken()) {
+      return Promise.resolve({ authenticated: false, user: null });
+    }
+
+    return fetchApi<{ authenticated: boolean; user: any }>('/auth/me/', {
       method: 'GET',
-    }),
+    });
+  },
 };
 
 // Dashboard API
