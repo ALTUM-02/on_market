@@ -12,9 +12,10 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from .models import UserProfile, Folder, UploadedFile, TextContent
 from .serializers import (
-    UserSerializer, UserProfileSerializer, FolderSerializer,
-    UploadedFileSerializer, TextContentSerializer, LoginSerializer, RegisterSerializer
+    UserProfileSerializer, FolderSerializer,
+    UploadedFileSerializer, TextContentSerializer
 )
+from authentication.serializers import UserSerializer, LoginSerializer, RegisterSerializer
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
