@@ -35,7 +35,7 @@ export function Navbar() {
           <div className="flex items-center space-x-4">
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-animate-button"
+              className="p-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-yellow-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-animate-button"
               aria-label="Toggle dark mode"
             >
               {darkMode ? (
