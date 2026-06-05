@@ -452,7 +452,21 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
                     key={size.value}
                     onClick={() => {
                       setFontSize(size.value);
-                      execCommand('fontSize', '7'); // We'll use CSS for actual sizing
+                      const applyFontSize = (size: string) => {
+                        document.execCommand("fontSize", false, "7");
+
+  const fonts = editorRef.current?.querySelectorAll(
+    'font[size="7"]'
+  );
+
+  fonts?.forEach((font) => {
+    font.removeAttribute("size");
+    (font as HTMLElement).style.fontSize = `${size}px`;
+  });
+
+  setFontSize(size);
+  handleContentChange();
+};
                       setShowSizeMenu(false);
                     }}
                     className={`block w-full text-left px-3 py-2 rounded ${
