@@ -520,8 +520,8 @@ export function TextEditor({ onSuccess, initialData }: TextEditorProps) {
         )}
 
         <button
-          onClick={handleSave}
-          disabled={saving}
+            onClick={handleSave}
+            disabled={saving}
           className={`w-full py-2 px-4 rounded-lg font-medium transition-colors ${
             saving
               ? 'bg-gray-400 cursor-not-allowed'
