@@ -145,4 +145,4 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data.get('last_name', ''),
         )
         UserProfile.objects.get_or_create(user=user)
-        return user
+        return
