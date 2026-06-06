@@ -36,7 +36,6 @@ class UploadedFile(models.Model):
     """Model for uploaded files (images, animations, audio, video)"""
     FILE_TYPES = [
         ('image', 'Image'),
-        ('animation', 'Animation'),
     
     FILE_TYPES = [
     ('image', 'Image'),
