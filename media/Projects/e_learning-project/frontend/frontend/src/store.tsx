@@ -131,3 +131,12 @@ export function useDataStore() {
   if (!ctx) throw new Error('useDataStore must be used within AppProvider');
   return ctx;
 }
+
+export interface UploadedFile {
+  id: number;
+  filename: string;
+  file_type: string;
+  file_url: string;
+  description?: string;
+  created_at: string;
+}
