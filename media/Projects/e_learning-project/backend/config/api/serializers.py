@@ -50,7 +50,7 @@ class UploadedFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = UploadedFile
         fields = ['id', 'file_type', 'file', 'file_url', 'filename', 'folder', 'description', 'created_at', 'updated_at']
-        read_only_fields = ['id', 'created_at', 'updated_at']
+        
     
     def get_file_url(self, obj):
         if obj.file:
