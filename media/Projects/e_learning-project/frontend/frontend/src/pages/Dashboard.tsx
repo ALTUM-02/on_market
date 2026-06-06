@@ -259,32 +259,71 @@ export function DashboardPage() {
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {files.map((file) => (
-                    <div
-                      key={file.id}
-                      className={`p-4 rounded-lg ${darkMode ? 'bg-gray-700 hover:bg-gray-600' : 'bg-gray-100 hover:bg-gray-200'} transition-colors cursor-pointer`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <span className="text-3xl">
-                          {file.file_type === 'image' ? '🖼️' :
-                           file.file_type === 'animation' ? '🎨' :
-                           file.file_type === 'audio' ? '🎤' : '🎬'}
-                        </span>
-                        <div className="flex-1 min-w-0">
-                          <p className={`font-medium truncate ${darkMode ? 'text-white' : 'text-gray-800'}`}>
-                            {file.filename}
-                          </p>
-                          <p className={`text-xs ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>
-                            {file.file_type} • {new Date(file.created_at).toLocaleDateString()}
-                          </p>
-                          {file.description && (
-                            <p className={`text-xs mt-1 truncate ${darkMode ? 'text-gray-500' : 'text-gray-400'}`}>
-                              {file.description}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+  <div
+    key={file.id}
+    className={`p-4 rounded-lg ${
+      darkMode
+        ? 'bg-gray-700'
+        : 'bg-gray-100'
+    }`}
+  >
+    <h3 className="font-semibold mb-3">
+      {file.filename}
+    </h3>
+
+    {/* IMAGE */}
+    {file.file_type === "image" && (
+      <img
+        src={file.file_url}
+        alt={file.filename}
+        className="w-full h-64 object-cover rounded"
+      />
+    )}
+
+    {/* VIDEO */}
+    {file.file_type === "video" && (
+      <video
+        controls
+        className="w-full rounded"
+      >
+        <source
+          src={file.file_url}
+          type="video/mp4"
+        />
+      </video>
+    )}
+
+    {/* AUDIO */}
+    {file.file_type === "audio" && (
+      <audio
+        controls
+        className="w-full"
+      >
+        <source src={file.file_url} />
+      </audio>
+    )}
+
+    {/* GIF / ANIMATION */}
+    {file.file_type === "animation" && (
+      <img
+        src={file.file_url}
+        alt={file.filename}
+        className="w-full rounded"
+      />
+    )}
+
+    <div className="mt-3">
+      <a
+        href={file.file_url}
+        target="_blank"
+        rel="noreferrer"
+        className="text-blue-500"
+      >
+        Open File
+      </a>
+    </div>
+  </div>
+))}
                 </div>
               )}
             </div>

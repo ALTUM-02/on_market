@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { fileApi } from '../../api/client';
 import { useDataStore, useThemeStore } from '../../store';
 
-type FileType = 'image' | 'animation' | 'audio' | 'video';
+type FileType = 'image' | 'animation' | 'audio' | 'video' ;
 
 interface FileUploadProps {
   onSuccess?: () => void;
