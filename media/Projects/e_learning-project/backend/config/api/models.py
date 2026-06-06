@@ -34,7 +34,6 @@ class Folder(models.Model):
 
 class UploadedFile(models.Model):
     """Model for uploaded files (images, animations, audio, video)"""
-    FILE_TYPES = 
     
     FILE_TYPES = [
     ('image', 'Image'),
