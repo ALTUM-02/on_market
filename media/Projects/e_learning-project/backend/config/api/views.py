@@ -18,7 +18,7 @@ from .serializers import (
 from authentication.serializers import UserSerializer, LoginSerializer, RegisterSerializer
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-
+from rest_framework.permissions import BasePermission, IsAuthenticated
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """Custom permission to only allow owners to edit their objects"""
@@ -27,6 +27,10 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
         return obj.user == request.user
 
+class IsAdminUserOnly(BasePermission):
+    """Custom permission to only allow admin users"""
+    def has_permission(self, request, view):
+        return request.user.is_staff
 
 @method_decorator(csrf_exempt, name='dispatch')
 class AuthView(APIView):
@@ -123,9 +127,17 @@ class FolderViewSet(viewsets.ModelViewSet):
 @method_decorator(csrf_exempt, name='dispatch')
 class UploadedFileViewSet(viewsets.ModelViewSet):
     """ViewSet for UploadedFile model"""
+    queryset = UploadedFile.objects.all()
     serializer_class = UploadedFileSerializer
     permission_classes = [permissions.IsAuthenticated]
     parser_classes = [MultiPartParser, FormParser, JSONParser]
+    
+    def get_permissions(self):
+        
+        if self.action in ["create", "update", "partial_update", "destroy"]:
+            return [IsAdminUserOnly()]
+        
+        return [IsAuthenticated()]
 
     def get_queryset(self):
         return UploadedFile.objects.filter(user=self.request.user)
