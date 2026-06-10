@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import permissions import IsAuthenticated   
+from rest_framework import  IsAuthenticated   
+
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
