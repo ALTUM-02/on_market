@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from rest_framework import permissions import IsAuthenticated   
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -72,3 +72,14 @@ class LoginView(APIView):
             "access": str(refresh.access_token),
             "refresh": str(refresh),
         })
+        
+class MeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        return Response({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email,
+        })        
